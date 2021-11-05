@@ -2,119 +2,52 @@
 
 {% block title %} My cart{% endblock %}
 
-
 {% block content %}
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
-<div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <div class="col-md-9">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <span class="pull-right">(<strong>5</strong>) items</span>
-                    <h5>Items in your cart</h5>
-                </div>
-
-                <!-- start of the cart items. -->
-                <div style="background-color: #ffffff;color: inherit;padding: 15px 20px 20px 20px;border-color: #e7eaec;border-image: none;border-style: solid solid none;border-width: 1px 0;box-sizing: border-box;" class="ibox-content">
-                    <div class="table-responsive">
-                        <table class="table shoping-cart-table">
-                            <tbody>
-                            {% for cp in cart.cartproduct_set.all %}
-                            <tr>
-                                <td width="90">
-                                    <div class="cart-product-imitation">
-                                    </div>
-                                </td>
-                                <td class="desc">
-                                    <h3>
-                                    <a href="#" class="text-navy">
-                                       {{cp.product.title}}
-                                    </a>
-                                    </h3>
-                                    <p class="small">
-                                        It is a long established fact that a reader will be distracted by the readable
-                                        content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                    </p>
-                                    <dl class="small m-b-none">
-                                        <dt>Description lists</dt>
-                                        <dd>A description list is perfect for defining terms.</dd>
-                                    </dl>
-
-                                    <div class="m-t-sm">
-                                        <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    {{cp.rate}}
-                                    <s class="small text-muted">${{cp.rate}} + 50</s>
-                                </td>
-                                <td width="65">
-                                    <input type="text" class="form-control" placeholder="1">
-                                </td>
-                                <td>
-                                    <h4>
-                                       {{cp.rate}}
-                                    </h4>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-                {% endfor %}
-                 <!-- End of each item on my cart -->
-                <div class="ibox-content">
-                    <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
-                    <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
-
-                </div>
-            </div>
-
-        </div>
-
-
-        <div style="box-sizing: border-box;width: 25%;float: left;position: relative;min-height: 1px;padding-right: 15px;padding-left: 15px;}" class="col-md-3">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Cart Summary</h5>
-                </div>
-                <div class="ibox-content">
-                    <span>
-                        Total
-                    </span>
-                    <h2 class="font-bold">
-                        $390,00
-                    </h2>
-
-                    <hr>
-                    <span class="text-muted small">
-                        *For United States, France and Germany applicable sales tax will be applied
-                    </span>
-                    <div class="m-t-sm">
-                        <div class="btn-group">
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Checkout</a>
-                        <a href="#" class="btn btn-white btn-sm"> Cancel</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Support</h5>
-                </div>
-                <div class="ibox-content text-center">
-                    <h3><i class="fa fa-phone"></i> +43 100 783 001</h3>
-                    <span class="small">
-                        Please contact with us if you have any questions. We are avalible 24h.
-                    </span>
-                </div>
-            </div>
+        <div class="col-md-8">
+            <h4>Items in my cart</h4><hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Product</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cp in cart.cartproduct_set.all %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{cp.product.title}}</td>
+                        <td>{{cp.rate}}</td>
+                        <td>{{cp.quantity}}</td>
+                        <td>{{cp.subtotal}}</td>
+                        <td>
+                            <a href="{% url 'ecomapp:managecart' cp.id %}?action=inc" class="btn btn-primary"> + </a>
+                            <a href="{% url 'ecomapp:managecart' cp.id %}?action=dcr" class="btn btn-warning"> - </a>
+                            <a href="{% url 'ecomapp:managecart' cp.id %}?action=rmv" class="btn btn-danger"> x </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <th colspan="4" class="text-right">Total</th>
+                        <th>Rs. {{cart.total}}</th>
+                        {% if cart.cartproduct_set.all %}
+                        <th><a href="{% url 'ecomapp:emptycart' %}">Empty Cart</a></th>
+                        {% endif %}
+                    </tr>
+                    {% if cart.cartproduct_set.all %}
+                    <tr>
+                        <th><a class="btn btn-info" href="{% url 'ecomapp:checkout' %}"> Checkout </a></th>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}
