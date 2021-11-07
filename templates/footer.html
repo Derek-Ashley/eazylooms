@@ -12,6 +12,8 @@ ul {
 .footer-section {
   background: #151414;
   position: relative;
+  margin-top: -50px;
+  bottom:0;
 }
 .footer-cta {
   border-bottom: 1px solid #373636;
@@ -222,9 +224,9 @@ ul {
                                 <h3>Useful Links</h3>
                             </div>
                             <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">Categories</a></li>
-                                <li><a href="#">Cart</a></li>
+                                <li><a href="{% url 'ecomapp:home' %}">Home</a></li>
+                                <li><a href="{% url 'ecomapp:gallery' %}">Gallery</a></li>
+                                <li><a href="{% url 'ecomapp:mycart' %}">Cart</a></li>
                                 <li><a href="#">About us</a></li>
                                 <li><a href="#">Contact us</a></li>
                             </ul>
@@ -260,7 +262,7 @@ ul {
                     <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
                         <div class="footer-menu">
                             <ul>
-                                <li><a href="#">Home</a></li>
+                                <li><a href="{% url 'ecomapp:home' %}">Home</a></li>
                                <!-- <li><a href="#">Terms</a></li> -->
                                 <!--  <li><a href="#">Privacy</a></li>-->
                                 <!--  <li><a href="#">Policy</a></li> -->
