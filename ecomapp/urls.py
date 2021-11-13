@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-
+from . import views
 
 app_name = "ecomapp"
 urlpatterns = [
@@ -9,7 +9,7 @@ urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path("gallery/", GalleryView.as_view(), name="gallery"),
     path("about/", AboutView.as_view(), name="about"),
-    path("contact-us/", ContactView.as_view(), name="contact"),
+    path("contact_us/", views.contact_us, name="contact"),
     path("all-products/", AllProductsView.as_view(), name="allproducts"),
     path("product/<slug:slug>/", ProductDetailView.as_view(), name="productdetail"),
 

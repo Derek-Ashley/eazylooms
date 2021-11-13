@@ -11,7 +11,8 @@ from django.db.models import Q
 from .models import *
 from .forms import *
 import requests
-
+from django.core.mail import mail_admins
+from django.contrib import messages
 
 
 class EcomMixin(object):
@@ -355,8 +356,26 @@ class AboutView(EcomMixin, TemplateView):
     template_name = "about.html"
 
 
-class ContactView(EcomMixin, TemplateView):
-    template_name = "contactus.html"
+def contact_us(request):
+    success_url = reverse_lazy("ecomapp:home")
+    if request.method == 'POST':
+        f = ContactForm(request.POST)
+
+        if f.is_valid():
+            name = f.cleaned_data['name']
+            sender = f.cleaned_data['email']
+            subject = "You have 1 potential client from {}:{}".format(name, sender)
+            message = "Name: {}\n Email ID: {}\n Subject: {}\nMessage: {}\nNumber: {}".format(name, sender,f.cleaned_data['subject'], f.cleaned_data['message'],f.cleaned_data['phone'])
+            mail_admins(subject, message)
+
+            f.save()
+            messages.add_message(request, messages.INFO, 'We will contact you shortly.')
+            return redirect(reverse_lazy("ecomapp:home"))
+
+    else:
+        f = ContactForm()
+    return render(request, 'contactus.html', {'form': f})
+
 
 
 class CustomerProfileView(TemplateView):

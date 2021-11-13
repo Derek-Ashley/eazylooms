@@ -1,6 +1,12 @@
 from django import forms
-from .models import Order, Customer, Product
+from .models import Order, Customer, Product,ContactForm
 from django.contrib.auth.models import User
+
+class ContactForm(forms.ModelForm):
+
+    class Meta:
+        model = ContactForm
+        fields = '__all__'
 
 
 class CheckoutForm(forms.ModelForm):

@@ -1,9 +1,77 @@
 {% extends 'base.html' %}
-
-{% block title %}Contact us{% endblock %}
+{% block title %}Contact Us{% endblock %}
 
 {% block content %}
-    <h1>To Contact us, Call the following numbers</h1>
-    <p>989898989898</p>
-    <p>989898989898</p>
+<style>
+    body {
+    background-color: #444442;
+    color: #f4efef;
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif, 'arial';
+    font-weight: 600;
+    font-size: 72px;
+    color: white;
+    text-align: center;
+}
+h4 {
+    font-family: 'Roboto', sans-serif, 'arial';
+    font-weight: 400;
+    font-size: 20px;
+    color: #9b9b9b;
+    line-height: 1.5;
+}
+/* ///// inputs /////*/
+
+input[type=text], select, textarea {
+  color:black;
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+
+table{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+</style>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+   <h1>Contact us here!</h1>
+        <div class="row">
+			<h4 style="text-align:center">We'd love to hear from you!</h4>
+	</div>
+    <div class="content">
+    <div class="section-inner clearfix">
+
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>
+            {{ form.as_table }}
+                <tr>
+                    <td></td>
+                    <td style="color:black; align:center;"><input type="submit" value="Submit"></td>
+
+                </tr>
+            </table>
+        </form>
+
+        </div>
+    </div>
+
 {% endblock %}
